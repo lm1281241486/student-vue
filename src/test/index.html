@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <style>
+        .notify {
+            width: 200px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: lime;
+            color: white;
+            border-radius: 3px;
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .fadein {
+            animation: animate_in .25s;
+        }
+        .fadeout {
+            animation: animate_out .25s;
+        }
+
+        @keyframes animate_in {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+            100% {
+                top: 10%;
+                opacity: 1;
+            }
+        }
+
+        @keyframes animate_out {
+            100% {
+                top: 0;
+                opacity: 0;
+            }
+            0% {
+                top: 10%;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="btn">弹窗</button>
+    <script>
+        const btn = document.getElementById('btn')
+        btn.onclick = function () {
+            const app = new Vue({
+            el: document.createElement("div"),
+            template: `<div class="notify" :class="{fadein: showNotify,fadeout: !showNotify}" v-if="exit">
+                         修改成功
+                       </div>`,
+                data: {
+                    showNotify: true,
+                    exit: true
+                }
+            }) 
+            document.body.appendChild(app.$el) 
+            setTimeout( _ => {
+                app.showNotify = false 
+            },1000) 
+            setTimeout( _=> {
+                app.exit = false
+            }, 1200)
+        }
+         
+        
+    </script>
+</body>
+</html>
